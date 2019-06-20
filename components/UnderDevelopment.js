@@ -17,6 +17,8 @@ import {
 } from 'native-base';
 /* Lodash Imports */
 import _get from 'lodash/get';
+/* Color Imports */
+import colors from '../assets/stylesheets/ColorSet1'
 /* Assets import */
 import underConstructionImage from '../assets/images/underConstruction.png'
 /* Redux Imports */
@@ -47,7 +49,7 @@ class UnderDevelopment extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#161561",
+        backgroundColor: colors.primaryBackgroundColor,
         flexDirection: 'column',
         height: '100%',
         alignItems: 'center',

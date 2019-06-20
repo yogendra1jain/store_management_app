@@ -19,6 +19,8 @@ import {
 import _get from 'lodash/get';
 /* Icons Import */
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+/* Color Imports */
+import colors from '../assets/stylesheets/ColorSet1'
 /* Redux Imports */
 
 /* Component Imports */
@@ -36,13 +38,13 @@ class HomeContentScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
-                <Header style={{ backgroundColor: '#161561', borderBottomColor: '#fff' }}>
+                <Header style={{ backgroundColor: colors.secondaryBackgroundColor }} androidStatusBarColor={colors.secondaryBackgroundColor}>
                     <Body style={{ paddingLeft: 10 }}>
                         <Title>Store Management</Title>
                     </Body>
                     <Right>
                         <Button transparent>
-                            <FontAwesome name="user" size={20} color={'white'} />
+                            <FontAwesome name="user" size={20} color={colors.secondaryBackgroundTextColor} />
                         </Button>
                         <Button transparent>
                             <Icon name="more" />
@@ -56,7 +58,7 @@ class HomeContentScreen extends React.Component {
                             <Card style={styles.cardStyle} >
                                 <CardItem style={styles.cardContentStyle}>
                                     <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'group'} size={60} color={'white'} style={{ width: '30%' }} />
+                                        <FontAwesome name={'group'} size={60} color={colors.primaryCardTextColor} style={{ width: '30%' }} />
                                         <Content style={{ width: '70%' }}>
                                             <Text style={[styles.cardTextColor, { fontSize: 18, fontWeight: 'bold' }]}>Patient Check In</Text>
                                         </Content>
@@ -71,10 +73,10 @@ class HomeContentScreen extends React.Component {
                             <Card style={[styles.cardStyle]}>
                                 <CardItem style={styles.cardContentStyle}>
                                     <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'clipboard'} size={60} color={'white'} style={{ width: '30%' }} />
+                                        <FontAwesome name={'clipboard'} size={60} color={colors.primaryCardTextColor} style={{ width: '30%' }} />
                                         <Content style={{ width: '70%' }}>
                                             <Text style={[styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Inventory Audit</Text>
-                                            <Text style={{ color: '#F9C533', fontSize: 10 }}>Under Construction</Text>
+                                            <Text style={{ color: '#e0a826', fontSize: 10 }}>Under Construction</Text>
                                         </Content>
                                     </Body>
 
@@ -88,10 +90,10 @@ class HomeContentScreen extends React.Component {
                             <Card style={styles.cardStyle}>
                                 <CardItem style={styles.cardContentStyle}>
                                     <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'truck'} size={60} color={'white'} style={{ width: '30%' }} />
+                                        <FontAwesome name={'truck'} size={60} color={colors.primaryCardTextColor} style={{ width: '30%' }} />
                                         <Content style={{ width: '70%' }}>
                                             <Text style={[styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Deliveries Monitoring</Text>
-                                            <Text style={{ color: '#F9C533', fontSize: 10 }}>Under Construction</Text>
+                                            <Text style={{ color: '#e0a826', fontSize: 10 }}>Under Construction</Text>
                                         </Content>
                                     </Body>
                                 </CardItem>
@@ -104,10 +106,10 @@ class HomeContentScreen extends React.Component {
                             <Card style={styles.cardStyle}>
                                 <CardItem style={styles.cardContentStyle}>
                                     <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'tasks'} size={60} color={'white'} style={{ width: '30%' }} />
+                                        <FontAwesome name={'tasks'} size={60} color={colors.primaryCardTextColor} style={{ width: '30%' }} />
                                         <Content style={{ width: '70%' }}>
                                             <Text style={[styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Online Orders</Text>
-                                            <Text style={{ color: '#F9C533', fontSize: 10 }}>Under Construction</Text>
+                                            <Text style={{ color: '#e0a826', fontSize: 10 }}>Under Construction</Text>
                                         </Content>
                                     </Body>
                                 </CardItem>
@@ -123,20 +125,20 @@ class HomeContentScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#161561"
+        backgroundColor: colors.primaryBackgroundColor
     },
     cardStyle: {
-        backgroundColor: '#2A2B7E',
+        backgroundColor: colors.primaryCardBackgroundColor,
         marginBottom: 1,
         borderRadius: 10,
         padding: 20,
-        borderColor: '#2A2B7E'
+        borderColor: colors.primaryCardBorderColor
     },
     cardContentStyle: {
-        backgroundColor: '#2A2B7E',
+        backgroundColor: colors.primaryCardBackgroundColor,
     },
     cardTextColor: {
-        color: '#fff'
+        color: colors.primaryCardTextColor
     }
 
 });

@@ -27,13 +27,46 @@ import _get from 'lodash/get';
 import _cloneDeep from 'lodash/cloneDeep';
 /* Icons Import */
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+/* Color Imports */
+import colors from '../../assets/stylesheets/ColorSet1'
 /* Redux Imports */
 
 /* Component Imports */
 
 
 const Form = t.form.Form;
-const stylesheet = t.form.Form.stylesheet;
+let stylesheet = _cloneDeep(t.form.Form.stylesheet);
+
+stylesheet = {
+    ...stylesheet,
+    textbox: {
+        normal: {
+            borderColor: colors.normalTextfieldColor,
+            borderRadius: 6,
+            borderWidth: 1,
+            color: colors.normalTextfieldColor,
+            fontSize: 17,
+            height: 36,
+            marginBottom: 5,
+            paddingHorizontal: 7,
+            paddingVertical: 0,
+        }
+    },
+    controlLabel: {
+        normal: {
+            color: colors.normalTextfieldColor,
+            fontSize: 17,
+            marginBottom: 7,
+            fontWeight: '500'
+        },
+        error: {
+            color: colors.errorTextfieldColor,
+            fontSize: 17,
+            marginBottom: 7,
+            fontWeight: '500'
+        }
+    }
+};
 
 
 const ValidPassword = t.refinement(t.String, (n) => {
@@ -72,6 +105,7 @@ class PatientCheckInForm extends React.Component {
     };
 
     componentDidMount() {
+        console.log(stylesheet, 'stylesheet')
         // this.props.setLoadingFalse();
         // if (this.props.auth.user) {
         //     if (this.props.auth.user.isVerified) {
@@ -81,9 +115,9 @@ class PatientCheckInForm extends React.Component {
         //     }
         // }
     }
-    componentWillUnmount() {
-        this.props.clearError();
-    }
+    // componentWillUnmount() {
+    //     this.props.clearError();
+    // }
 
     onChange = (value) => {
         this.setState({ value });
@@ -150,48 +184,57 @@ class PatientCheckInForm extends React.Component {
                     error: `${_get(strings, 'confirmPasswordErrorText', '')}`,
                     onSubmitEditing: () => this.onPress(),
                 },
-            },
 
+                mayuk: {
+                    keyboardType: 'default',
+                    autoFocus: false,
+                    secureTextEntry: true,
+                    label: `${_get(strings, 'mayuk', '')}`,
+                    error: `${_get(strings, 'mayukerror', '')}`,
+                    onSubmitEditing: () => this.onPress(),
+                },
+                
+
+            },
+            stylesheet: stylesheet
         };
         return (
             <Container style={[styles.container, { width: '100%' }]}>
 
-                <Header style={{ backgroundColor: '#161561', borderBottomColor: '#fff' }}>
+                <Header style={{ backgroundColor: colors.secondaryBackgroundColor }} androidStatusBarColor={colors.secondaryBackgroundColor}>
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name="arrow-back" />
+                            <FontAwesome name="chevron-left" size={15} color={colors.secondaryBackgroundTextColor} />
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Customer Queue</Title>
+                        <Title>Add New Customer</Title>
                     </Body>
                     <Right>
-                        <Button transparent onPress={() => this.props.navigation.navigate('PatientCheckInForm')}>
-                            <FontAwesome name="user-plus" size={20} color={'white'} />
+                        <Button transparent>
+                            <FontAwesome name="search" size={20} color={colors.secondaryBackgroundTextColor} />
                         </Button>
                     </Right>
                 </Header>
 
-
-                <Content padder>
-                    <Text>{error}</Text>
-                    <View  >
-                        <Form
-                            ref="form"
-                            options={options}
-                            type={this.Password}
-                            value={this.state.value}
-                            onChange={this.onChange}
-
-                        />
-                    </View>
-                    <View style={{ justifyContent: 'center', width: '100%', flexDirection: 'row' }}>
+                <Body style={{ width: '100%' }}>
+                    <Content style={{ width: '90%', marginTop: 40 }}>
+                        <View >
+                            <Form
+                                ref="form"
+                                options={options}
+                                type={this.Password}
+                                value={this.state.value}
+                                onChange={this.onChange}
+                            />
+                        </View>
+                    </Content>
+                    <View style={{ justifyContent: 'center', width: '90%', flexDirection: 'row' }}>
                         <Button onPress={() => this.onPress()} style={styles.button} >
-                            <Text >Save</Text>
+                            <Text >Add Customer</Text>
                         </Button>
                     </View>
-                </Content>
-
+                </Body>
             </Container>
         );
     }
@@ -199,21 +242,21 @@ class PatientCheckInForm extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#161561"
+        backgroundColor: colors.primaryBackgroundColor,
     },
     cardStyle: {
         position: 'relative',
-        backgroundColor: '#2A2B7E',
+        backgroundColor: colors.primaryCardBackgroundColor,
         marginBottom: 1,
         borderRadius: 10,
         padding: 15,
-        borderColor: '#2A2B7E'
+        borderColor: colors.primaryCardBorderColor
     },
     cardContentStyle: {
-        backgroundColor: '#2A2B7E',
+        backgroundColor: colors.primaryCardBackgroundColor,
     },
     cardTextColor: {
-        color: '#fff'
+        color: colors.primaryCardTextColor
     },
 
     queueCardTitle: {
@@ -239,13 +282,14 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: '#4648BF',
-        width: '80%',
-        height: 50,
+        backgroundColor: colors.primaryButtonColor,
+        width: '100%',
+        height: 53,
         borderRadius: 8,
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 30
+        marginTop: 30,
+        marginBottom: 20
     }
 });
 

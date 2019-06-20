@@ -8,7 +8,7 @@ import configureStore from './store/configureStore';
 // import customize from './theme/customize';
 // import theme from './theme';
 import axios from 'axios';
-import { ActivityIndicator, YellowBox, Alert, Linking, Platform, View, Image } from 'react-native';
+import { ActivityIndicator, YellowBox, Alert, Linking, Platform, View, Image, StatusBar } from 'react-native';
 import Config from 'react-native-config';
 // import { generateV1uuid, logError, compareAppVersion } from './utils';
 // import _get from 'lodash/get';
@@ -146,6 +146,10 @@ class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Root>
+            <StatusBar
+              backgroundColor='#2F3443'
+              barStyle="light-content"
+            />
             <RootNavigator
               ref={navigatorRef => NavigationService.setRootNavigator(navigatorRef)}
             />

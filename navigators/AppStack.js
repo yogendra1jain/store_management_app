@@ -6,7 +6,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+/* Color Imports */
+import colors from '../assets/stylesheets/ColorSet1'
 
 import HomeContentScreen from '../components/HomeContentScreen';
 import SettingsScreen from '../components/SettingsScreen';
@@ -170,10 +171,10 @@ const TabStack = createBottomTabNavigator(
         getTabBarIcon(navigation, focused, tintColor),
     }),
     tabBarOptions: {
-      activeTintColor: '#59BBF7',
-      inactiveTintColor: '#fff',
+      activeTintColor: colors.activeColor,
+      inactiveTintColor: colors.inactiveColor,
       style: {
-        backgroundColor: '#161561',
+        backgroundColor: colors.secondaryBackgroundColor,
       }
     },
   }

@@ -26,6 +26,8 @@ import {
 } from 'native-base';
 /* Lodash Imports */
 import _get from 'lodash/get';
+/* Color Imports */
+import colors from '../../assets/stylesheets/ColorSet1'
 /* Icons Import */
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 /* Redux Imports */
@@ -54,10 +56,10 @@ class PatientCheckInScreen extends React.Component {
     render() {
         return (
             <Container style={styles.container}>
-                <Header style={{ backgroundColor: '#161561', borderBottomColor: '#fff' }}>
+                <Header style={{ backgroundColor: colors.secondaryBackgroundColor }} androidStatusBarColor={colors.secondaryBackgroundColor}>
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name="arrow-back" />
+                            <FontAwesome name="chevron-left" size={15} color={colors.secondaryBackgroundTextColor} />
                         </Button>
                     </Left>
                     <Body>
@@ -65,7 +67,7 @@ class PatientCheckInScreen extends React.Component {
                     </Body>
                     <Right>
                         <Button transparent onPress={() => this.props.navigation.navigate('PatientCheckInForm')}>
-                            <FontAwesome name="user-plus" size={20} color={'white'} />
+                            <FontAwesome name="user-plus" size={20} color={colors.secondaryBackgroundTextColor} />
                         </Button>
                     </Right>
                 </Header>
@@ -79,19 +81,19 @@ class PatientCheckInScreen extends React.Component {
                                     position: 'absolute',
                                     width: 15,
                                     height: 15,
-                                    backgroundColor: '#59BBF8',
+                                    backgroundColor: colors.primaryAccentColor,
                                     borderTopLeftRadius: 10,
                                     borderBottomRightRadius: 10,
                                 }}>
                                 </View>
                                 <CardItem style={styles.cardContentStyle}>
                                     <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:"space-between" }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 11 }}>
-                                                <FontAwesome name={'medkit'} size={25} color={'white'} style={{ flex: 1 }} />
+                                                <FontAwesome name={'medkit'} size={25} color={colors.primaryCardTextColor} style={{ flex: 1 }} />
                                                 <Text style={[styles.cardTextColor, styles.queueCardTitle]}>Mayuk Agarwal</Text>
                                             </View>
-                                            <FontAwesome name={'trash-o'} size={25} color={'#0DD3D7'} style={{ flex: 1 }} />
+                                            <FontAwesome name={'trash-o'} size={25} color={colors.secondaryAccentColor} style={{ flex: 1 }} />
                                         </View>
                                         <View style={styles.queueCardBasicInfoContainer}>
                                             <View>
@@ -144,7 +146,7 @@ class PatientCheckInScreen extends React.Component {
                             <CardItem style={styles.cardContentStyle}>
                                 <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'pagelines'} size={25} color={'white'} style={{ flex: 1 }} />
+                                        <FontAwesome name={'pagelines'} size={25} color={colors.primaryCardTextColor} style={{ flex: 1 }} />
                                         <Text style={[styles.cardTextColor, styles.queueCardTitle]}>Paul Pogba</Text>
                                     </View>
                                     <View style={styles.queueCardBasicInfoContainer}>
@@ -171,7 +173,7 @@ class PatientCheckInScreen extends React.Component {
                             <CardItem style={styles.cardContentStyle}>
                                 <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'pagelines'} size={25} color={'white'} style={{ flex: 1 }} />
+                                        <FontAwesome name={'pagelines'} size={25} color={colors.primaryCardTextColor} style={{ flex: 1 }} />
                                         <Text style={[styles.cardTextColor, styles.queueCardTitle]}>James Milner</Text>
                                     </View>
                                     <View style={styles.queueCardBasicInfoContainer}>
@@ -199,7 +201,7 @@ class PatientCheckInScreen extends React.Component {
                             <CardItem style={styles.cardContentStyle}>
                                 <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'medkit'} size={25} color={'white'} style={{ flex: 1 }} />
+                                        <FontAwesome name={'medkit'} size={25} color={colors.primaryCardTextColor} style={{ flex: 1 }} />
                                         <Text style={[styles.cardTextColor, styles.queueCardTitle]}>David De Gea</Text>
                                     </View>
                                     <View style={styles.queueCardBasicInfoContainer}>
@@ -226,7 +228,7 @@ class PatientCheckInScreen extends React.Component {
                             <CardItem style={styles.cardContentStyle}>
                                 <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'medkit'} size={25} color={'white'} style={{ flex: 1 }} />
+                                        <FontAwesome name={'medkit'} size={25} color={colors.primaryCardTextColor} style={{ flex: 1 }} />
                                         <Text style={[styles.cardTextColor, styles.queueCardTitle]}>Marcus Rashford</Text>
                                     </View>
                                     <View style={styles.queueCardBasicInfoContainer}>
@@ -253,7 +255,7 @@ class PatientCheckInScreen extends React.Component {
                             <CardItem style={styles.cardContentStyle}>
                                 <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'pagelines'} size={25} color={'white'} style={{ flex: 1 }} />
+                                        <FontAwesome name={'pagelines'} size={25} color={colors.primaryCardTextColor} style={{ flex: 1 }} />
                                         <Text style={[styles.cardTextColor, styles.queueCardTitle]}>Jesse Lingard</Text>
                                     </View>
                                     <View style={styles.queueCardBasicInfoContainer}>
@@ -287,21 +289,21 @@ class PatientCheckInScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#161561"
+        backgroundColor: colors.primaryBackgroundColor
     },
     cardStyle: {
         position: 'relative',
-        backgroundColor: '#2A2B7E',
-        marginBottom: 1,
+        backgroundColor: colors.primaryCardBackgroundColor,
+        marginBottom: 0,
         borderRadius: 10,
         padding: 15,
-        borderColor: '#2A2B7E'
+        borderColor: colors.primaryCardBorderColor
     },
     cardContentStyle: {
-        backgroundColor: '#2A2B7E',
+        backgroundColor: colors.primaryCardBackgroundColor,
     },
     cardTextColor: {
-        color: '#fff'
+        color: colors.primaryCardTextColor
     },
 
     queueCardTitle: {
