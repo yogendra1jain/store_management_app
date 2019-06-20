@@ -327,11 +327,6 @@ const styles = StyleSheet.create({
     ExpandedInfo: {
         width: '50%'
     }
-
-
-
-
-
 });
 
 export default PatientCheckInScreen;

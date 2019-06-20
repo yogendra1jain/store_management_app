@@ -1,19 +1,18 @@
 import React from 'react';
-import { Text, View, Image } from 'react-native';
-// import serviceImg from '../assets/images/serviceImg.png';
-import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 /* Color Imports */
-import colors from '../assets/stylesheets/ColorSet1'
-
+import colors from '../assets/stylesheets/ColorSet1';
+/* Components Import */
 import HomeContentScreen from '../components/HomeContentScreen';
-import SettingsScreen from '../components/SettingsScreen';
-import PatientCheckInScreen from '../components/PatientCheckIn/PatientCheckInScreen'
-import PatientCheckInForm from '../components/PatientCheckIn/PatientCheckInForm'
-import UnderDevelopment from '../components/UnderDevelopment'
+import PatientCheckInScreen from '../components/PatientCheckIn/PatientCheckInScreen';
+import PatientCheckInForm from '../components/PatientCheckIn/PatientCheckInForm';
+import UnderDevelopment from '../components/UnderDevelopment';
+import SettingsScreen from '../components/Settings/SettingsScreen';
+
 
 const AppStack = createStackNavigator(
   {
@@ -61,7 +60,7 @@ AppStack.navigationOptions = ({ navigation }) => {
 
 const SettingsAppStack = createStackNavigator(
   {
-    Settings: UnderDevelopment,
+    Settings: SettingsScreen,
   },
   {
     initialRouteName: 'Settings',
