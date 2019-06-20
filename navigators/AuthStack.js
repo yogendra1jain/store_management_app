@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation';
 
-import UsernameScreen from '../components/auth/UsernameScreen';
+import UsernameScreen from '../components/auth/UserNameScreen';
 
 // import PasswordScreen from '../components/auth/PasswordScreen';
 // import OtpScreen from '../components/auth/OtpScreen';
@@ -13,17 +13,8 @@ export default AuthStack = createStackNavigator(
     }, {
         initialRouteName: 'WhichUser',
         navigationOptions: {
-
-            headerStyle: {
-                backgroundColor: '#0d7aaa',
-                elevation: 0,
-                shadowOpacity: 0,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                color: '#FFFFFF',
-                fontSize: 18,
-            },
+            headerVisible: false,
         },
+        headerMode: 'none',
     }
 );

@@ -15,10 +15,13 @@ import {
     Icon,
 
 } from 'native-base';
+
+import { withNavigation } from 'react-navigation';
 /* Lodash Imports */
 import _get from 'lodash/get';
 /* Icons Import */
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import withAuth from './hocs/withAuth';
 /* Redux Imports */
 
 /* Component Imports */
@@ -141,4 +144,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default HomeContentScreen;
+export default withAuth(true)(withNavigation(HomeContentScreen));
