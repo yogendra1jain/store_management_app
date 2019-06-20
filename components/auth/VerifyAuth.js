@@ -26,7 +26,7 @@ class VerifyAuth extends React.Component {
             timeout: 15, // Timeout for the verified state is 15 mins
         };
         this.state = {
-            isVerified: false,
+            isVerified: true,
         };
         this.listener = null;
     }
