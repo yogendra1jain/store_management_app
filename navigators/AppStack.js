@@ -36,9 +36,27 @@ const AppStack = createStackNavigator(
     headerMode: 'none',
     navigationOptions: {
       headerVisible: false,
+
     },
   }
 );
+
+// * To Hide Tabs in a stack view
+AppStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible;
+  if (navigation.state.routes.length > 1) {
+    navigation.state.routes.map(route => {
+      if (route.routeName === "PatientCheckInForm") {
+        tabBarVisible = false;
+      } else {
+        tabBarVisible = true;
+      }
+    });
+  }
+  return {
+    tabBarVisible
+  };
+};
 
 const SettingsAppStack = createStackNavigator(
   {
