@@ -10,7 +10,7 @@ import configureStore from './store/configureStore';
 import axios from 'axios';
 import { ActivityIndicator, YellowBox, Alert, Linking, Platform, View, Image, StatusBar } from 'react-native';
 import Config from 'react-native-config';
-// import { generateV1uuid, logError, compareAppVersion } from './utils';
+import { generateV1uuid, logError, compareAppVersion } from './utils';
 // import _get from 'lodash/get';
 // import { Text } from 'react-native-elements';
 // import { Container, Content, Header, Body, Button, Left, Right, Title } from 'native-base';
@@ -27,7 +27,7 @@ let BASE_URL = API_HOST;
  * TODO... Workaround for now. Since environment properties are not getting read in Windows
 */
 if (!API_HOST) {
-  BASE_URL = 'http://13.126.59.19:20021/api';
+  BASE_URL = 'http://13.126.59.19:20029/api';
 }
 
 export const AXIOS = axios.create({
