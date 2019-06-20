@@ -11,6 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import HomeContentScreen from '../components/HomeContentScreen';
 import SettingsScreen from '../components/SettingsScreen';
 import PatientCheckInScreen from '../components/PatientCheckIn/PatientCheckInScreen'
+import PatientCheckInForm from '../components/PatientCheckIn/PatientCheckInForm'
 import UnderDevelopment from '../components/UnderDevelopment'
 
 const AppStack = createStackNavigator(
@@ -19,6 +20,7 @@ const AppStack = createStackNavigator(
 
     // Patient CheckIn screens
     PatientCheckInScreen: PatientCheckInScreen,
+    PatientCheckInForm: PatientCheckInForm,
 
     // Inventory Audit screens
     InventoryAuditScreen: UnderDevelopment,

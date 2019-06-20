@@ -64,7 +64,7 @@ class PatientCheckInScreen extends React.Component {
                         <Title>Customer Queue</Title>
                     </Body>
                     <Right>
-                        <Button transparent>
+                        <Button transparent onPress={() => this.props.navigation.navigate('PatientCheckInForm')}>
                             <FontAwesome name="user-plus" size={20} color={'white'} />
                         </Button>
                     </Right>

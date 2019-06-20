@@ -58,7 +58,7 @@ class HomeContentScreen extends React.Component {
                                     <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
                                         <FontAwesome name={'group'} size={60} color={'white'} style={{ width: '30%' }} />
                                         <Content style={{ width: '70%' }}>
-                                            <Text style={[styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Patient Check In</Text>
+                                            <Text style={[styles.cardTextColor, { fontSize: 18, fontWeight: 'bold' }]}>Patient Check In</Text>
                                         </Content>
                                     </Body>
                                 </CardItem>

@@ -78,6 +78,11 @@
 		4B730FD3385844388BE6CC1C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D97C2C0136D34B3AB6ABA24A /* Octicons.ttf */; };
 		65C73660846049CC91D630E5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3926CB40F2F54A25A3F238AC /* SimpleLineIcons.ttf */; };
 		9A0461A0CFC1433ABA3C33B6 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FD39695916946B3B4DE3671 /* Zocial.ttf */; };
+		FC079BA28D0C465B8B326F57 /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4766AB8D8784CADB9EB570E /* Ubuntu-Regular.ttf */; };
+		AC9F98BAD5C244ECB007D45F /* SwankyandMooMoo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 549012B66353446790146EAE /* SwankyandMooMoo.ttf */; };
+		26CF2ED6BE664C87B6B5F6C1 /* Arvo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E898881C0C24FC59B8ADE72 /* Arvo-Regular.ttf */; };
+		FAEE9F88D5324D5BAC430AF5 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1151B1BB185249E9B9D5ECE7 /* Montserrat-Bold.ttf */; };
+		EFBB7F82351C42F7B80CECF6 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 812BB2B424C245E6A3417C8A /* Montserrat-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -427,6 +432,11 @@
 		D97C2C0136D34B3AB6ABA24A /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		3926CB40F2F54A25A3F238AC /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		9FD39695916946B3B4DE3671 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F4766AB8D8784CADB9EB570E /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; name = "Ubuntu-Regular.ttf"; path = "../assets/fonts/Ubuntu-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		549012B66353446790146EAE /* SwankyandMooMoo.ttf */ = {isa = PBXFileReference; name = "SwankyandMooMoo.ttf"; path = "../assets/fonts/SwankyandMooMoo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5E898881C0C24FC59B8ADE72 /* Arvo-Regular.ttf */ = {isa = PBXFileReference; name = "Arvo-Regular.ttf"; path = "../assets/fonts/Arvo-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1151B1BB185249E9B9D5ECE7 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; name = "Montserrat-Bold.ttf"; path = "../assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		812BB2B424C245E6A3417C8A /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -737,6 +747,11 @@
 				D97C2C0136D34B3AB6ABA24A /* Octicons.ttf */,
 				3926CB40F2F54A25A3F238AC /* SimpleLineIcons.ttf */,
 				9FD39695916946B3B4DE3671 /* Zocial.ttf */,
+				F4766AB8D8784CADB9EB570E /* Ubuntu-Regular.ttf */,
+				549012B66353446790146EAE /* SwankyandMooMoo.ttf */,
+				5E898881C0C24FC59B8ADE72 /* Arvo-Regular.ttf */,
+				1151B1BB185249E9B9D5ECE7 /* Montserrat-Bold.ttf */,
+				812BB2B424C245E6A3417C8A /* Montserrat-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1221,6 +1236,11 @@
 				4B730FD3385844388BE6CC1C /* Octicons.ttf in Resources */,
 				65C73660846049CC91D630E5 /* SimpleLineIcons.ttf in Resources */,
 				9A0461A0CFC1433ABA3C33B6 /* Zocial.ttf in Resources */,
+				FC079BA28D0C465B8B326F57 /* Ubuntu-Regular.ttf in Resources */,
+				AC9F98BAD5C244ECB007D45F /* SwankyandMooMoo.ttf in Resources */,
+				26CF2ED6BE664C87B6B5F6C1 /* Arvo-Regular.ttf in Resources */,
+				FAEE9F88D5324D5BAC430AF5 /* Montserrat-Bold.ttf in Resources */,
+				EFBB7F82351C42F7B80CECF6 /* Montserrat-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
