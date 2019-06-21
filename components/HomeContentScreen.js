@@ -22,11 +22,14 @@ import _get from 'lodash/get';
 /* Icons Import */
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 /* Color Imports */
-import colors from '../assets/stylesheets/ColorSet1'
-import withAuth from './hocs/withAuth';
+import { themeManager } from '../assets/stylesheets/Themes'
 /* Redux Imports */
+import { connect } from 'react-redux';
+/* Global Imports */
+import withAuth from './hocs/withAuth';
 
 /* Component Imports */
+
 
 
 class HomeContentScreen extends React.Component {
@@ -34,20 +37,24 @@ class HomeContentScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-
+            
         }
+    }
+
+    componentDidMount() {
+
     }
 
     render() {
         return (
-            <Container style={styles.container}>
-                <Header style={{ backgroundColor: colors.secondaryBackgroundColor }} androidStatusBarColor={colors.secondaryBackgroundColor}>
+            <Container style={this.props.styles.container}>
+                <Header style={{ backgroundColor: this.props.colors.secondaryBackgroundColor }} androidStatusBarColor={this.props.colors.secondaryBackgroundColor}>
                     <Body style={{ paddingLeft: 10 }}>
                         <Title>Store Management</Title>
                     </Body>
                     <Right>
                         <Button transparent>
-                            <FontAwesome name="user" size={20} color={colors.secondaryBackgroundTextColor} />
+                            <FontAwesome name="user" size={20} color={this.props.colors.secondaryBackgroundTextColor} />
                         </Button>
                         <Button transparent>
                             <Icon name="more" />
@@ -58,12 +65,12 @@ class HomeContentScreen extends React.Component {
                 <ScrollView>
                     <TouchableHighlight onPress={() => this.props.navigation.navigate('PatientCheckInScreen')}>
                         <Content padder >
-                            <Card style={styles.cardStyle} >
-                                <CardItem style={styles.cardContentStyle}>
+                            <Card style={this.props.styles.cardStyle} >
+                                <CardItem style={this.props.styles.cardContentStyle}>
                                     <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'group'} size={60} color={colors.primaryCardTextColor} style={{ width: '30%' }} />
+                                        <FontAwesome name={'group'} size={60} color={this.props.colors.primaryCardTextColor} style={{ width: '30%' }} />
                                         <Content style={{ width: '70%' }}>
-                                            <Text style={[styles.cardTextColor, { fontSize: 18, fontWeight: 'bold' }]}>Patient Check In</Text>
+                                            <Text style={[this.props.styles.cardTextColor, { fontSize: 18, fontWeight: 'bold' }]}>Patient Check In</Text>
                                         </Content>
                                     </Body>
                                 </CardItem>
@@ -73,12 +80,12 @@ class HomeContentScreen extends React.Component {
 
                     <TouchableHighlight onPress={() => this.props.navigation.navigate('InventoryAuditScreen')}>
                         <Content padder>
-                            <Card style={[styles.cardStyle]}>
-                                <CardItem style={styles.cardContentStyle}>
+                            <Card style={[this.props.styles.cardStyle]}>
+                                <CardItem style={this.props.styles.cardContentStyle}>
                                     <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'clipboard'} size={60} color={colors.primaryCardTextColor} style={{ width: '30%' }} />
+                                        <FontAwesome name={'clipboard'} size={60} color={this.props.colors.primaryCardTextColor} style={{ width: '30%' }} />
                                         <Content style={{ width: '70%' }}>
-                                            <Text style={[styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Inventory Audit</Text>
+                                            <Text style={[this.props.styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Inventory Audit</Text>
                                             <Text style={{ color: '#e0a826', fontSize: 10 }}>Under Construction</Text>
                                         </Content>
                                     </Body>
@@ -90,12 +97,12 @@ class HomeContentScreen extends React.Component {
 
                     <TouchableHighlight onPress={() => this.props.navigation.navigate('DeliveriesManagementScreen')}>
                         <Content padder>
-                            <Card style={styles.cardStyle}>
-                                <CardItem style={styles.cardContentStyle}>
+                            <Card style={this.props.styles.cardStyle}>
+                                <CardItem style={this.props.styles.cardContentStyle}>
                                     <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'truck'} size={60} color={colors.primaryCardTextColor} style={{ width: '30%' }} />
+                                        <FontAwesome name={'truck'} size={60} color={this.props.colors.primaryCardTextColor} style={{ width: '30%' }} />
                                         <Content style={{ width: '70%' }}>
-                                            <Text style={[styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Deliveries Monitoring</Text>
+                                            <Text style={[this.props.styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Deliveries Monitoring</Text>
                                             <Text style={{ color: '#e0a826', fontSize: 10 }}>Under Construction</Text>
                                         </Content>
                                     </Body>
@@ -106,12 +113,12 @@ class HomeContentScreen extends React.Component {
 
                     <TouchableHighlight onPress={() => this.props.navigation.navigate('OnlineOrderScreen')}>
                         <Content padder>
-                            <Card style={styles.cardStyle}>
-                                <CardItem style={styles.cardContentStyle}>
+                            <Card style={this.props.styles.cardStyle}>
+                                <CardItem style={this.props.styles.cardContentStyle}>
                                     <Body style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'tasks'} size={60} color={colors.primaryCardTextColor} style={{ width: '30%' }} />
+                                        <FontAwesome name={'tasks'} size={60} color={this.props.colors.primaryCardTextColor} style={{ width: '30%' }} />
                                         <Content style={{ width: '70%' }}>
-                                            <Text style={[styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Online Orders</Text>
+                                            <Text style={[this.props.styles.cardTextColor, { fontWeight: 'bold', fontSize: 18 }]}>Online Orders</Text>
                                             <Text style={{ color: '#e0a826', fontSize: 10 }}>Under Construction</Text>
                                         </Content>
                                     </Body>
@@ -126,24 +133,37 @@ class HomeContentScreen extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: colors.primaryBackgroundColor
-    },
-    cardStyle: {
-        backgroundColor: colors.primaryCardBackgroundColor,
-        marginBottom: 1,
-        borderRadius: 10,
-        padding: 20,
-        borderColor: colors.primaryCardBorderColor
-    },
-    cardContentStyle: {
-        backgroundColor: colors.primaryCardBackgroundColor,
-    },
-    cardTextColor: {
-        color: colors.primaryCardTextColor
+function newColors(colors) {
+    let styles = {}
+    return styles = {
+        container: {
+            backgroundColor: colors.primaryBackgroundColor
+        },
+        cardStyle: {
+            backgroundColor: colors.primaryCardBackgroundColor,
+            marginBottom: 1,
+            borderRadius: 10,
+            padding: 20,
+            borderColor: colors.primaryCardBorderColor
+        },
+        cardContentStyle: {
+            backgroundColor: colors.primaryCardBackgroundColor,
+        },
+        cardTextColor: {
+            color: colors.primaryCardTextColor
+        }
     }
 
-});
+}
 
-export default withAuth(true)(withNavigation(HomeContentScreen));
+
+
+function mapStateToProps(state) {
+    const { commonReducer } = state;
+    const theme = commonReducer.theme
+    return {
+        theme
+    };
+}
+
+export default connect(mapStateToProps)(themeManager((withAuth(true)(withNavigation(HomeContentScreen))), newColors));

@@ -5,14 +5,16 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 /* Color Imports */
-import colors from '../assets/stylesheets/ColorSet1';
+import colors from '../assets/stylesheets/ColorSet1'
+import {themeManager} from '../assets/stylesheets/Themes'
 /* Components Import */
 import HomeContentScreen from '../components/HomeContentScreen';
 import PatientCheckInScreen from '../components/PatientCheckIn/PatientCheckInScreen';
 import PatientCheckInForm from '../components/PatientCheckIn/PatientCheckInForm';
 import UnderDevelopment from '../components/UnderDevelopment';
 import SettingsScreen from '../components/Settings/SettingsScreen';
-
+/* Redux Imports */
+import { connect } from 'react-redux';
 
 const AppStack = createStackNavigator(
   {
@@ -178,4 +180,12 @@ const TabStack = createBottomTabNavigator(
     },
   }
 );
-export default TabStack;
+
+function mapStateToProps(){
+  return{
+
+  }
+}
+
+
+export default connect(mapStateToProps)(TabStack)

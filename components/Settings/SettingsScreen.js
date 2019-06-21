@@ -33,7 +33,8 @@ import colors from '../../assets/stylesheets/ColorSet1'
 /* Icons Import */
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 /* Redux Imports */
-
+import { connect } from 'react-redux';
+import { setCustomData } from '../../actions/commonAction';
 /* Component Imports */
 
 
@@ -52,6 +53,14 @@ class SettingsScreen extends React.Component {
     changeLayout = () => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         this.setState({ expanded: !this.state.expanded });
+    }
+
+    radioPressed = (theme) => {
+        this.setState({
+            theme
+        })
+        this.props.dispatch(setCustomData(theme, {init: 'APP_THEME_CUSTOM_INIT'}, 'APP_THEME', 'theme'))
+        
     }
 
     render() {
@@ -89,8 +98,9 @@ class SettingsScreen extends React.Component {
                                     <Radio
                                         color={colors.primaryAccentColor}
                                         selectedColor={colors.primaryAccentColor}
-                                        selected={true}
+                                        selected={this.state.theme=='light'? false : true}
                                         style={{paddingRight:20}}
+                                        onPress={()=>this.radioPressed('dark')}
                                     />
                                 </Right>
                             </View>
@@ -102,8 +112,9 @@ class SettingsScreen extends React.Component {
                                     <Radio
                                         color={colors.primaryAccentColor}
                                         selectedColor={colors.primaryAccentColor}
-                                        selected={false}
+                                        selected={this.state.theme=='light'? true : false}
                                         style={{paddingRight:20}}
+                                        onPress={()=>this.radioPressed('light')}
                                     />
                                 </Right>
                             </View>
@@ -124,4 +135,12 @@ const styles = StyleSheet.create({
 
 });
 
-export default SettingsScreen;
+function mapStateToProps(state) {
+    const { commonReducer } = state;
+    
+    return {
+      
+    };
+  }
+
+export default connect(mapStateToProps)(SettingsScreen);
