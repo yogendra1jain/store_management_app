@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from "moment";
 import {
     StyleSheet,
     ScrollView,
@@ -27,12 +28,12 @@ import {
 /* Lodash Imports */
 import _get from 'lodash/get';
 /* Color Imports */
-import {themeManager} from '../../assets/stylesheets/Themes'
+import { themeManager } from '../../assets/stylesheets/Themes'
 /* Icons Import */
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 /* Redux Imports */
 import { connect } from 'react-redux';
-
+import { postData } from '../../actions/commonAction'
 /* Component Imports */
 
 
@@ -52,6 +53,110 @@ class PatientCheckInScreen extends React.Component {
     changeLayout = () => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         this.setState({ expanded: !this.state.expanded });
+    }
+
+    componentDidMount() {
+        this.getQueueList()
+    }
+
+    getQueueList = () => {
+        let url = 'Get/CustomerQueue/Active'
+        let data = {
+            id: '64e3ee71-807f-4853-b31c-e45060f3f2fb'
+        }
+        let identifier = 'FETCH_CUSTOMER_QUEUE'
+        let key = 'CustomerQueue'
+        this.props.dispatch(postData(url, data, identifier, key))
+            .then((data) => {
+                console.log(data, 'customerData')
+            }, (err) => {
+                console.log('error while fetching fleet user list list', err);
+            });
+    }
+
+    populateCustomerQueue = () => {
+        let customerData = _get(this.props, 'CustomerQueue.queueItems', [])
+        let view = []
+        customerData.map((data, index) => {
+            view.push(
+                <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout}>
+                    <Content padder>
+                        <Card style={this.props.styles.cardStyle}>
+                            <View style={{
+                                position: 'absolute',
+                                width: 15,
+                                height: 15,
+                                backgroundColor: this.props.colors.primaryAccentColor,
+                                borderTopLeftRadius: 10,
+                                borderBottomRightRadius: 10,
+                            }}>
+                            </View>
+                            <CardItem style={this.props.styles.cardContentStyle}>
+                                <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 11 }}>
+                                            {
+                                                _get(data, 'customer.customerType', 1) == 1 ?
+                                                    <FontAwesome name={'medkit'} size={25} color={this.props.colors.primaryCardTextColor} style={{ flex: 1 }} /> :
+                                                    <FontAwesome name={'pagelines'} size={25} color={this.props.colors.primaryCardTextColor} style={{ flex: 1 }} />
+                                            }
+
+                                            <Text style={[this.props.styles.cardTextColor, this.props.styles.queueCardTitle]}>{_get(data, 'customer.customer.firstName', '')} {_get(data, 'customer.customer.lastName', '')}</Text>
+                                        </View>
+                                        <FontAwesome name={'trash-o'} size={25} color={this.props.colors.secondaryAccentColor} style={{ flex: 1 }} />
+                                    </View>
+                                    <View style={this.props.styles.queueCardBasicInfoContainer}>
+                                        <View>
+                                            <Text style={[this.props.styles.cardTextColor]}>Age</Text>
+                                            <Text style={[this.props.styles.cardTextColor]}>{moment().diff(_get(data, 'customer.dob', 0), 'years')} yrs</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={[this.props.styles.cardTextColor]}>Time</Text>
+                                            <Text style={[this.props.styles.cardTextColor]}>{moment(_get(data, 'checkIn.seconds', 0) * 1000).format('h:mm a')}</Text>
+                                        </View>
+                                        <View>
+                                            <Text style={[this.props.styles.cardTextColor]}>State</Text>
+                                            <Text style={[this.props.styles.cardTextColor]}>{_get(data, 'customer.billingAddress.state', '...')}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={{ width: '100%', height: this.state.expanded ? null : 0, overflow: 'hidden', alignItems: 'center', flexDirection: 'column', }}>
+                                        <View style={[this.props.styles.queueCardExpandedInfoContainer]}>
+                                            <View style={this.props.styles.ExpandedInfo}>
+                                                <Text style={[this.props.styles.cardTextColor]}>Med ID</Text>
+                                                <Text style={[this.props.styles.cardTextColor]}>{_get(data, 'customer.medicalLicenseNumber', '...')}</Text>
+                                            </View>
+                                            <View style={this.props.styles.ExpandedInfo}>
+                                                <Text style={[this.props.styles.cardTextColor]}>Id</Text>
+                                                <Text style={[this.props.styles.cardTextColor]}>{data.customer.id}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={[this.props.styles.queueCardExpandedInfoContainer]}>
+                                            <View style={this.props.styles.ExpandedInfo}>
+                                                <Text style={[this.props.styles.cardTextColor]}>Gram Limit</Text>
+                                                <Text style={[this.props.styles.cardTextColor]}>100 gm</Text>
+                                            </View>
+                                            <View style={this.props.styles.ExpandedInfo}>
+                                                <Text style={[this.props.styles.cardTextColor]}>Gram Limit</Text>
+                                                <Text style={[this.props.styles.cardTextColor]}>100 gm</Text>
+                                            </View>
+                                        </View>
+
+                                    </View>
+
+                                </Body>
+                            </CardItem>
+                        </Card>
+                    </Content>
+                </TouchableOpacity>
+            )
+        })
+
+        return (
+            <ScrollView>
+                {view}
+            </ScrollView>
+        )
     }
 
     render() {
@@ -75,71 +180,9 @@ class PatientCheckInScreen extends React.Component {
 
                 <ScrollView>
 
-                    <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout}>
-                        <Content padder>
-                            <Card style={this.props.styles.cardStyle}>
-                                <View style={{
-                                    position: 'absolute',
-                                    width: 15,
-                                    height: 15,
-                                    backgroundColor: this.props.colors.primaryAccentColor,
-                                    borderTopLeftRadius: 10,
-                                    borderBottomRightRadius: 10,
-                                }}>
-                                </View>
-                                <CardItem style={this.props.styles.cardContentStyle}>
-                                    <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 11 }}>
-                                                <FontAwesome name={'medkit'} size={25} color={this.props.colors.primaryCardTextColor} style={{ flex: 1 }} />
-                                                <Text style={[this.props.styles.cardTextColor, this.props.styles.queueCardTitle]}>Mayuk Agarwal</Text>
-                                            </View>
-                                            <FontAwesome name={'trash-o'} size={25} color={this.props.colors.secondaryAccentColor} style={{ flex: 1 }} />
-                                        </View>
-                                        <View style={this.props.styles.queueCardBasicInfoContainer}>
-                                            <View>
-                                                <Text style={[this.props.styles.cardTextColor]}>Age</Text>
-                                                <Text style={[this.props.styles.cardTextColor]}>24</Text>
-                                            </View>
-                                            <View>
-                                                <Text style={[this.props.styles.cardTextColor]}>Time</Text>
-                                                <Text style={[this.props.styles.cardTextColor]}>10:25 AM</Text>
-                                            </View>
-                                            <View>
-                                                <Text style={[this.props.styles.cardTextColor]}>State</Text>
-                                                <Text style={[this.props.styles.cardTextColor]}>CA</Text>
-                                            </View>
-                                        </View>
+                    {this.populateCustomerQueue()}
 
-                                        <View style={{ width: '100%', height: this.state.expanded ? null : 0, overflow: 'hidden', alignItems: 'center', flexDirection: 'column', }}>
-                                            <View style={[this.props.styles.queueCardExpandedInfoContainer]}>
-                                                <View style={this.props.styles.ExpandedInfo}>
-                                                    <Text style={[this.props.styles.cardTextColor]}>Med ID</Text>
-                                                    <Text style={[this.props.styles.cardTextColor]}>32423412</Text>
-                                                </View>
-                                                <View style={this.props.styles.ExpandedInfo}>
-                                                    <Text style={[this.props.styles.cardTextColor]}>Id</Text>
-                                                    <Text style={[this.props.styles.cardTextColor]}>21356234567</Text>
-                                                </View>
-                                            </View>
-                                            <View style={[this.props.styles.queueCardExpandedInfoContainer]}>
-                                                <View style={this.props.styles.ExpandedInfo}>
-                                                    <Text style={[this.props.styles.cardTextColor]}>Gram Limit</Text>
-                                                    <Text style={[this.props.styles.cardTextColor]}>100 gm</Text>
-                                                </View>
-                                                <View style={this.props.styles.ExpandedInfo}>
-                                                    <Text style={[this.props.styles.cardTextColor]}>Gram Limit</Text>
-                                                    <Text style={[this.props.styles.cardTextColor]}>100 gm</Text>
-                                                </View>
-                                            </View>
 
-                                        </View>
-
-                                    </Body>
-                                </CardItem>
-                            </Card>
-                        </Content>
-                    </TouchableOpacity>
 
 
                     <Content padder>
@@ -147,7 +190,7 @@ class PatientCheckInScreen extends React.Component {
                             <CardItem style={this.props.styles.cardContentStyle}>
                                 <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'pagelines'} size={25} color={this.props.colors.primaryCardTextColor} style={{ flex: 1 }} />
+
                                         <Text style={[this.props.styles.cardTextColor, this.props.styles.queueCardTitle]}>Paul Pogba</Text>
                                     </View>
                                     <View style={this.props.styles.queueCardBasicInfoContainer}>
@@ -169,124 +212,12 @@ class PatientCheckInScreen extends React.Component {
                         </Card>
                     </Content>
 
-                    <Content padder>
-                        <Card style={this.props.styles.cardStyle}>
-                            <CardItem style={this.props.styles.cardContentStyle}>
-                                <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'pagelines'} size={25} color={this.props.colors.primaryCardTextColor} style={{ flex: 1 }} />
-                                        <Text style={[this.props.styles.cardTextColor, this.props.styles.queueCardTitle]}>James Milner</Text>
-                                    </View>
-                                    <View style={this.props.styles.queueCardBasicInfoContainer}>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Age</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>28</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Time</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>10:15 AM</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>State</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>LA</Text>
-                                        </View>
-                                    </View>
-                                </Body>
-                            </CardItem>
-                        </Card>
-                    </Content>
-
-
-                    <Content padder>
-                        <Card style={this.props.styles.cardStyle}>
-                            <CardItem style={this.props.styles.cardContentStyle}>
-                                <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'medkit'} size={25} color={this.props.colors.primaryCardTextColor} style={{ flex: 1 }} />
-                                        <Text style={[this.props.styles.cardTextColor, this.props.styles.queueCardTitle]}>David De Gea</Text>
-                                    </View>
-                                    <View style={this.props.styles.queueCardBasicInfoContainer}>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Age</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>29</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Time</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>05:30 AM</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>State</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>NY</Text>
-                                        </View>
-                                    </View>
-                                </Body>
-                            </CardItem>
-                        </Card>
-                    </Content>
-
-                    <Content padder>
-                        <Card style={this.props.styles.cardStyle}>
-                            <CardItem style={this.props.styles.cardContentStyle}>
-                                <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'medkit'} size={25} color={this.props.colors.primaryCardTextColor} style={{ flex: 1 }} />
-                                        <Text style={[this.props.styles.cardTextColor, this.props.styles.queueCardTitle]}>Marcus Rashford</Text>
-                                    </View>
-                                    <View style={this.props.styles.queueCardBasicInfoContainer}>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Age</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>20</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Time</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>10:25 AM</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>State</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>CA</Text>
-                                        </View>
-                                    </View>
-                                </Body>
-                            </CardItem>
-                        </Card>
-                    </Content>
-
-                    <Content padder>
-                        <Card style={this.props.styles.cardStyle}>
-                            <CardItem style={this.props.styles.cardContentStyle}>
-                                <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <FontAwesome name={'pagelines'} size={25} color={this.props.colors.primaryCardTextColor} style={{ flex: 1 }} />
-                                        <Text style={[this.props.styles.cardTextColor, this.props.styles.queueCardTitle]}>Jesse Lingard</Text>
-                                    </View>
-                                    <View style={this.props.styles.queueCardBasicInfoContainer}>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Age</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>24</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Time</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>10:25 AM</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>State</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>CA</Text>
-                                        </View>
-                                    </View>
-                                </Body>
-                            </CardItem>
-                        </Card>
-                    </Content>
-
-
                 </ScrollView>
-
-
-
             </Container>
         );
     }
 }
+
 
 
 function newColors(colors) {
@@ -337,8 +268,10 @@ function newColors(colors) {
 function mapStateToProps(state) {
     const { commonReducer } = state;
     const theme = commonReducer.theme
+    const CustomerQueue = commonReducer.CustomerQueue
     return {
-        theme
+        theme,
+        CustomerQueue,
     };
 }
 

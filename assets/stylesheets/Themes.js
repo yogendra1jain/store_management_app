@@ -9,6 +9,9 @@ export function themeManager(WrappedComponent, StylesSheetCreatorFunction) {
         secondaryBackgroundColor: '#161561',
         secondaryBackgroundTextColor: '#ffffff',
 
+        tertiaryBackgroundColor: '#2A2B7E',
+        secondaryBackgroundTextColor: '#ffffff',
+    
         primaryCardBackgroundColor: '#2A2B7E',
         primaryCardBorderColor: '#2A2B7E',
         primaryCardTextColor: '#ffffff',
@@ -39,6 +42,9 @@ export function themeManager(WrappedComponent, StylesSheetCreatorFunction) {
         secondaryBackgroundColor: '#2F3443',
         secondaryBackgroundTextColor: '#ffffff',
 
+        tertiaryBackgroundColor: '#2F3443',
+        secondaryBackgroundTextColor: '#ffffff',
+    
         primaryCardBackgroundColor: '#f3f3f3',
         primaryCardBorderColor: '#485550',
         primaryCardTextColor: '#485550',

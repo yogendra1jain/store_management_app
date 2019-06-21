@@ -161,7 +161,8 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   return <IconComponent name={iconName} size={25} color={tintColor} />;
 };
 
-const TabStack = createBottomTabNavigator(
+
+TabStack = createBottomTabNavigator(
   {
     Home: AppStack,
     Settings: SettingsAppStack
