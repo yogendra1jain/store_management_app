@@ -19,10 +19,9 @@ export function themeManager(WrappedComponent, StylesSheetCreatorFunction) {
         primaryButtonColor: '#4648BF',
         primaryButtonTextColor: '#ffffff',
 
-        secondaryButtonColor: '#FFF',
-        secondaryButtonTextColor: '#4648BF',
-        secondaryButtonBorderColor: '#4648BF',
-
+        secondaryButtonColor: '#161561',
+        secondaryButtonTextColor: '#ffffff',
+        secondaryButtonBorderColor: '#ffffff',
 
         normalTextfieldColor: '#D5D4DF',
         errorTextfieldColor: '#a94442',

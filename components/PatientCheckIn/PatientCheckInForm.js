@@ -44,32 +44,15 @@ let stylesheet = _cloneDeep(t.form.Form.stylesheet);
 
 class PatientCheckInForm extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             value: {},
             isCondition: false,
             addNewCustomer: this.getType(1),
-            selectedCustomerType:1 
+            selectedCustomerType: 1
         };
-        this.options = {
-            fields: {
-                dob: {
-                    label: 'Date Of Birth',
-                    mode: 'date',
-                    config: {
-                        format: (date) => moment(date).format('MM-DD-YYYY'),
-                    }, // display the Date field as a DatePickerAndroid
-                },
-                mmrCardExpiration: {
-                    label: 'MMR Card Expiration',
-                    mode: 'date',
-                    config: {
-                        format: (date) => moment(date).format('MM-DD-YYYY'),
-                    }, // display the Date field as a DatePickerAndroid
-                }
-            }
-        };
+
         this.validate = null;
     }
 
@@ -137,23 +120,43 @@ class PatientCheckInForm extends React.Component {
     }
 
     selectCustomerType = (customerType) => {
-        this.setState({ addNewCustomer: this.getType(customerType),selectCustomerType:customerType})
+        this.setState({ addNewCustomer: this.getType(customerType), selectCustomerType: customerType })
     }
     render() {
         const { error, strings } = this.props || {};
+        this.options = {
+            fields: {
+                dob: {
+                    label: 'Date Of Birth',
+                    mode: 'date',
+                    config: {
+                        format: (date) => moment(date).format('MM-DD-YYYY'),
+                    }, // display the Date field as a DatePickerAndroid
+                },
+                mmrCardExpiration: {
+                    label: 'MMR Card Expiration',
+                    mode: 'date',
+                    config: {
+                        format: (date) => moment(date).format('MM-DD-YYYY'),
+                    }, // display the Date field as a DatePickerAndroid
+                }
+            },
+            stylesheet: this.props.styles.stylesheet
+        }
+
+        console.log(this.props.styles.stylesheet, 'Stylesheet')
         return (
             <Container style={[this.props.styles.container, { width: '100%' }]}>
-
-                <Header  style={{ backgroundColor: this.props.colors.secondaryBackgroundColor }} androidStatusBarColor={this.props.colors.secondaryBackgroundColor}>
-                    <Left style={{flex:1}}>
+                <Header style={{ backgroundColor: this.props.colors.secondaryBackgroundColor }} androidStatusBarColor={this.props.colors.secondaryBackgroundColor}>
+                    <Left style={{ flex: 1 }}>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <FontAwesome name="chevron-left" size={15} color={this.props.colors.secondaryBackgroundTextColor} />
                         </Button>
                     </Left>
-                    <Body style={{flex:4}}>
+                    <Body style={{ flex: 4 }}>
                         <Title>Add New Customer</Title>
                     </Body>
-                    <Right style={{flex:1}}>
+                    <Right style={{ flex: 1 }}>
                         <Button transparent>
                             <FontAwesome name="search" size={20} color={this.props.colors.secondaryBackgroundTextColor} />
                         </Button>
@@ -161,16 +164,16 @@ class PatientCheckInForm extends React.Component {
                 </Header>
 
                 <Body style={{ width: '100%' }}>
-                    <Content style={{ width: '90%', marginTop: 40 }}>
+                    <Content style={{ width: '90%', marginTop: 0 }}>
                         <View style={{ display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
                             <View>
-                                <Button style={this.state.selectCustomerType==1?this.props.styles.buttonTabActive:this.props.styles.buttonTabInActive} onPress={() => this.selectCustomerType(1)}>
-                                    <Text style={this.state.selectCustomerType==1?{color:this.props.colors.primaryButtonTextColor}:{color:this.props.colors.secondaryButtonTextColor}} >Medical</Text>
+                                <Button style={this.state.selectCustomerType == 1 ? this.props.styles.buttonTabActive : this.props.styles.buttonTabInActive} onPress={() => this.selectCustomerType(1)}>
+                                    <Text style={this.state.selectCustomerType == 1 ? { color: this.props.colors.primaryButtonTextColor } : { color: this.props.colors.secondaryButtonTextColor }} >Medical</Text>
                                 </Button>
                             </View>
-                            <View style={{marginLeft:20}}>
-                                <Button style={this.state.selectCustomerType==2?this.props.styles.buttonTabActive:this.props.styles.buttonTabInActive} onPress={() => this.selectCustomerType(2)}>
-                                    <Text style={this.state.selectCustomerType==2?{color:this.props.colors.primaryButtonTextColor}:{color:this.props.colors.secondaryButtonTextColor}} >RECREATIONAL</Text>
+                            <View style={{ marginLeft: 20 }}>
+                                <Button style={this.state.selectCustomerType == 2 ? this.props.styles.buttonTabActive : this.props.styles.buttonTabInActive} onPress={() => this.selectCustomerType(2)}>
+                                    <Text style={this.state.selectCustomerType == 2 ? { color: this.props.colors.primaryButtonTextColor } : { color: this.props.colors.secondaryButtonTextColor }} >RECREATIONAL</Text>
                                 </Button>
                             </View>
 
@@ -187,7 +190,7 @@ class PatientCheckInForm extends React.Component {
                     </Content>
                     <View style={{ justifyContent: 'center', width: '90%', flexDirection: 'row' }}>
                         <Button onPress={() => this.onPress()} style={this.props.styles.button} >
-                            <Text style={{color:this.props.colors.primaryButtonTextColor}}>Add Customer</Text>
+                            <Text style={{ color: this.props.colors.primaryButtonTextColor }}>Add Customer</Text>
                         </Button>
                     </View>
                 </Body>
@@ -259,8 +262,8 @@ function newColors(colors) {
         },
         buttonTabInActive: {
             backgroundColor: colors.secondaryButtonColor,
-            borderColor:colors.secondaryButtonBorderColor,
-            borderWidth:1,
+            borderColor: colors.secondaryButtonBorderColor,
+            borderWidth: 1,
             width: '100%',
             height: 40,
             borderRadius: 20,
@@ -280,6 +283,12 @@ function newColors(colors) {
                     marginBottom: 5,
                     paddingHorizontal: 7,
                     paddingVertical: 0,
+                }
+            },
+            dateValue: {
+                normal: {
+                    ...stylesheet.dateValue.normal,
+                    color: colors.normalTextfieldColor,  
                 }
             },
             controlLabel: {
