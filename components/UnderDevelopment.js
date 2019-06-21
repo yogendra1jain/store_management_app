@@ -1,28 +1,14 @@
 import React from 'react';
 import { StyleSheet, ScrollView, Image } from 'react-native'
-import {
-    Container,
-    Header,
-    Content,
-    Card,
-    CardItem,
-    Body,
-    Text,
-    Title,
-    Left,
-    Right,
-    Center,
-    Button,
-    Icon,
-} from 'native-base';
+import { Container } from 'native-base';
 /* Lodash Imports */
 import _get from 'lodash/get';
 /* Color Imports */
-import colors from '../assets/stylesheets/ColorSet1'
+import { themeManager } from '../assets/stylesheets/Themes'
 /* Assets import */
 import underConstructionImage from '../assets/images/underConstruction.png'
 /* Redux Imports */
-
+import { connect } from 'react-redux';
 /* Component Imports */
 
 
@@ -37,38 +23,36 @@ class UnderDevelopment extends React.Component {
 
     render() {
         return (
-            <Container style={[styles.container, {width:'100%'}]}>
+            <Container style={[this.props.styles.container, { width: '100%' }]}>
                 <Image
-                    style={{ width:350, height:350 }}
-                    source={ underConstructionImage }
+                    style={{ width: 350, height: 350 }}
+                    source={underConstructionImage}
                 />
             </Container>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: colors.primaryBackgroundColor,
-        flexDirection: 'column',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
 
-    },
-
-    cardStyle: {
-        backgroundColor: '#2A2B7E',
-        marginBottom: 2,
-        padding: 20,
-    },
-    cardContentStyle: {
-        backgroundColor: '#2A2B7E',
-    },
-    cardTextColor: {
-        color: '#fff'
+function newColors(colors) {
+    let styles = {}
+    return styles = {
+        container: {
+            backgroundColor: colors.primaryBackgroundColor,
+            flexDirection: 'column',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+        }
     }
+}
 
-});
+function mapStateToProps(state) {
+    const { commonReducer } = state;
+    const theme = commonReducer.theme
+    return {
+        theme
+    };
+}
 
-export default UnderDevelopment;
+export default connect(mapStateToProps)(themeManager(UnderDevelopment, newColors));

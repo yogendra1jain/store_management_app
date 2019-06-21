@@ -8,6 +8,9 @@ export function themeManager(WrappedComponent, StylesSheetCreatorFunction) {
     
         secondaryBackgroundColor: '#161561',
         secondaryBackgroundTextColor: '#ffffff',
+
+        tertiaryBackgroundColor: '#2A2B7E',
+        secondaryBackgroundTextColor: '#ffffff',
     
         primaryCardBackgroundColor: '#2A2B7E',
         primaryCardBorderColor: '#2A2B7E',
@@ -23,7 +26,8 @@ export function themeManager(WrappedComponent, StylesSheetCreatorFunction) {
         secondaryAccentColor: '#0DD3D7',
     
         activeColor: '#59BBF8',
-        inactiveColor: '#ffffff'
+        inactiveColor: '#ffffff',
+
     
     }
     
@@ -32,6 +36,9 @@ export function themeManager(WrappedComponent, StylesSheetCreatorFunction) {
         primaryBackgroundTextColor: '#485550',
     
         secondaryBackgroundColor: '#2F3443',
+        secondaryBackgroundTextColor: '#ffffff',
+
+        tertiaryBackgroundColor: '#2F3443',
         secondaryBackgroundTextColor: '#ffffff',
     
         primaryCardBackgroundColor: '#f3f3f3',
