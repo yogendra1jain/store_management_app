@@ -2,7 +2,8 @@ import React from 'react';
 import {
     StyleSheet,
     ScrollView,
-    View
+    View,
+    TouchableHighlight
 } from 'react-native';
 import t from 'tcomb-form-native';
 // import { Text } from 'react-native-elements';
@@ -21,6 +22,7 @@ import {
     Button,
     Icon,
 } from 'native-base';
+import moment from 'moment';
 /* Lodash Imports */
 import _set from 'lodash/set';
 import _get from 'lodash/get';
@@ -40,60 +42,68 @@ let stylesheet = _cloneDeep(t.form.Form.stylesheet);
 
 
 
-
-const ValidPassword = t.refinement(t.String, (n) => {
-    if (n) {
-        return validatePassword(n);
-    }
-});
-
-function validatePassword(password) {
-    let re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-    return re.test(String(password));
-}
-
 class PatientCheckInForm extends React.Component {
 
     constructor() {
         super();
-        this.samePassword = t.refinement(t.String, (s) => {
-            return s == this.state.value.newPassword;
-        });
         this.state = {
             value: {},
             isCondition: false,
+            addNewCustomer: this.getType(1)
         };
-        this.Password = t.struct({
-            oldPassword: ValidPassword,
-            newPassword: ValidPassword,
-            confirmPassword: this.samePassword,
-        });
+        this.options = {
+            fields: {
+                dob: {
+                    label: 'Date Of Birth',
+                    mode: 'date',
+                    config: {
+                        format: (date) => moment(date).format('MM-DD-YYYY'),
+                    }, // display the Date field as a DatePickerAndroid
+                },
+                mmrCardExpiration: {
+                    label: 'MMR Card Expiration',
+                    mode: 'date',
+                    config: {
+                        format: (date) => moment(date).format('MM-DD-YYYY'),
+                    }, // display the Date field as a DatePickerAndroid
+                }
+            }
+        };
         this.validate = null;
     }
 
     static navigationOptions = {
         header: null,
     };
-
-    componentDidMount() {
-        // this.props.setLoadingFalse();
-        // if (this.props.auth.user) {
-        //     if (this.props.auth.user.isVerified) {
-        //         this.props.navigation.navigate('Home');
-        //     } else {
-        //         // pass
-        //     }
-        // }
+    getType = (customerType) => {
+        if (customerType == 2) {
+            return t.struct({
+                firstName: t.String,
+                middleName: t.String,
+                lastName: t.String,
+                state: t.String,
+                dob: t.Date,
+                loyalteeProgram: t.Boolean,
+            });
+        }
+        else {
+            return t.struct({
+                firstName: t.String,
+                middleName: t.String,
+                lastName: t.String,
+                state: t.String,
+                dob: t.Date,
+                loyalteeProgram: t.Boolean,
+                medicalCardNumber: t.String,
+                mmrCardExpiration: t.Date,
+                plantCount: t.Number,
+                gramLimit: t.Number
+            });
+        }
     }
-    // componentWillUnmount() {
-    //     this.props.clearError();
-    // }
 
     onChange = (value) => {
         this.setState({ value });
-        if (value.confirmPassword != null && value.confirmPassword != '') {
-            this.validate = this.refs.form.getValue();
-        }
     }
 
     onPress = () => {
@@ -125,49 +135,12 @@ class PatientCheckInForm extends React.Component {
         }
     }
 
+    selectCustomerType = (customerType) => {
+        this.setState({ addNewCustomer: this.getType(customerType) })
+    }
+
     render() {
         const { error, strings } = this.props || {};
-        const options = {
-            // template: creditCard,
-            fields: {
-                oldPassword: {
-                    keyboardType: 'default',
-                    autoFocus: true,
-                    secureTextEntry: true,
-                    label: `${_get(strings, 'oldPasswordLabel', '')}`,
-                    error: `${_get(strings, 'passwordErrorText', '')}`,
-                    onSubmitEditing: () => this.refs.form.getComponent('newPassword').refs.input.focus()
-
-                },
-                newPassword: {
-                    keyboardType: 'default',
-                    secureTextEntry: true,
-                    label: `${_get(strings, 'newPasswordLabel', '')}`,
-                    error: `${_get(strings, 'passwordErrorText', '')}`,
-                    onSubmitEditing: () => this.refs.form.getComponent('confirmPassword').refs.input.focus()
-                },
-                confirmPassword: {
-                    keyboardType: 'default',
-                    autoFocus: false,
-                    secureTextEntry: true,
-                    label: `${_get(strings, 'confirmPasswordLabel', '')}`,
-                    error: `${_get(strings, 'confirmPasswordErrorText', '')}`,
-                    onSubmitEditing: () => this.onPress(),
-                },
-
-                mayuk: {
-                    keyboardType: 'default',
-                    autoFocus: false,
-                    secureTextEntry: true,
-                    label: `${_get(strings, 'mayuk', '')}`,
-                    error: `${_get(strings, 'mayukerror', '')}`,
-                    onSubmitEditing: () => this.onPress(),
-                },
-
-
-            },
-            stylesheet: this.props.styles.stylesheet
-        };
         return (
             <Container style={[this.props.styles.container, { width: '100%' }]}>
 
@@ -189,12 +162,24 @@ class PatientCheckInForm extends React.Component {
 
                 <Body style={{ width: '100%' }}>
                     <Content style={{ width: '90%', marginTop: 40 }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
+                            <TouchableHighlight onPress={() => this.selectCustomerType(1)}>
+                                <Button style={this.props.styles.button}>
+                                    <Text >Medical</Text>
+                                </Button>
+                            </TouchableHighlight>
+                            <TouchableHighlight onPress={() => this.selectCustomerType(2)}>
+                                <View>
+                                    <Text>RECREATIONAL</Text>
+                                </View>
+                            </TouchableHighlight>
+                        </View>
                         <View >
                             <Form
                                 ref="form"
-                                options={options}
-                                type={this.Password}
+                                type={this.state.addNewCustomer}
                                 value={this.state.value}
+                                options={this.options}
                                 onChange={this.onChange}
                             />
                         </View>
