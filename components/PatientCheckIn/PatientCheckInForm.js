@@ -47,32 +47,15 @@ let stylesheet = _cloneDeep(t.form.Form.stylesheet);
 
 class PatientCheckInForm extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             value: {},
             isCondition: false,
-            addNewCustomer: this.getType(2),
-            selectedCustomerType: 2
+addNewCustomer: this.getType(2),
+selectedCustomerType: 2
         };
-        this.options = {
-            fields: {
-                dob: {
-                    label: 'Date Of Birth',
-                    mode: 'date',
-                    config: {
-                        format: (date) => moment(date).format('MM-DD-YYYY'),
-                    }, // display the Date field as a DatePickerAndroid
-                },
-                mmrCardExpiration: {
-                    label: 'MMR Card Expiration',
-                    mode: 'date',
-                    config: {
-                        format: (date) => moment(date).format('MM-DD-YYYY'),
-                    }, // display the Date field as a DatePickerAndroid
-                }
-            }
-        };
+
         this.validate = null;
     }
 
@@ -180,9 +163,29 @@ class PatientCheckInForm extends React.Component {
     }
     render() {
         const { error, strings } = this.props || {};
+        this.options = {
+            fields: {
+                dob: {
+                    label: 'Date Of Birth',
+                    mode: 'date',
+                    config: {
+                        format: (date) => moment(date).format('MM-DD-YYYY'),
+                    }, // display the Date field as a DatePickerAndroid
+                },
+                mmrCardExpiration: {
+                    label: 'MMR Card Expiration',
+                    mode: 'date',
+                    config: {
+                        format: (date) => moment(date).format('MM-DD-YYYY'),
+                    }, // display the Date field as a DatePickerAndroid
+                }
+            },
+            stylesheet: this.props.styles.stylesheet
+        }
+
+        console.log(this.props.styles.stylesheet, 'Stylesheet')
         return (
             <Container style={[this.props.styles.container, { width: '100%' }]}>
-
                 <Header style={{ backgroundColor: this.props.colors.secondaryBackgroundColor }} androidStatusBarColor={this.props.colors.secondaryBackgroundColor}>
                     <Left style={{ flex: 1 }}>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -200,7 +203,7 @@ class PatientCheckInForm extends React.Component {
                 </Header>
 
                 <Body style={{ width: '100%' }}>
-                    <Content style={{ width: '90%', marginTop: 40 }}>
+                    <Content style={{ width: '90%', marginTop: 0 }}>
                         <View style={{ display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
                             <View>
                                 <Button style={this.state.selectedCustomerType == 1 ? this.props.styles.buttonTabActive : this.props.styles.buttonTabInActive} onPress={() => this.selectedCustomerType(1)}>
@@ -319,6 +322,12 @@ function newColors(colors) {
                     marginBottom: 5,
                     paddingHorizontal: 7,
                     paddingVertical: 0,
+                }
+            },
+            dateValue: {
+                normal: {
+                    ...stylesheet.dateValue.normal,
+                    color: colors.normalTextfieldColor,  
                 }
             },
             controlLabel: {
