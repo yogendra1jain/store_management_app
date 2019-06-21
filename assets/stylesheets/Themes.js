@@ -44,9 +44,9 @@ export function themeManager(WrappedComponent, StylesSheetCreatorFunction) {
         primaryCardTextColor: '#485550',
 
         primaryButtonColor: '#2F3443',
-        primaryButtonTextColor: '#485550',
+        primaryButtonTextColor: '#FFF',
 
-        secondaryButtonColor: '#485550',
+        secondaryButtonColor: '#F4F8FB',
         secondaryButtonTextColor: '#2F3443',
         secondaryButtonBorderColor: '#2F3443',
 

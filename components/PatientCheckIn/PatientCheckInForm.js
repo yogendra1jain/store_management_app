@@ -49,7 +49,8 @@ class PatientCheckInForm extends React.Component {
         this.state = {
             value: {},
             isCondition: false,
-            addNewCustomer: this.getType(1)
+            addNewCustomer: this.getType(1),
+            selectedCustomerType:1 
         };
         this.options = {
             fields: {
@@ -136,24 +137,23 @@ class PatientCheckInForm extends React.Component {
     }
 
     selectCustomerType = (customerType) => {
-        this.setState({ addNewCustomer: this.getType(customerType) })
+        this.setState({ addNewCustomer: this.getType(customerType),selectCustomerType:customerType})
     }
-
     render() {
         const { error, strings } = this.props || {};
         return (
             <Container style={[this.props.styles.container, { width: '100%' }]}>
 
-                <Header style={{ backgroundColor: this.props.colors.secondaryBackgroundColor }} androidStatusBarColor={this.props.colors.secondaryBackgroundColor}>
-                    <Left>
+                <Header  style={{ backgroundColor: this.props.colors.secondaryBackgroundColor }} androidStatusBarColor={this.props.colors.secondaryBackgroundColor}>
+                    <Left style={{flex:1}}>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <FontAwesome name="chevron-left" size={15} color={this.props.colors.secondaryBackgroundTextColor} />
                         </Button>
                     </Left>
-                    <Body>
+                    <Body style={{flex:4}}>
                         <Title>Add New Customer</Title>
                     </Body>
-                    <Right>
+                    <Right style={{flex:1}}>
                         <Button transparent>
                             <FontAwesome name="search" size={20} color={this.props.colors.secondaryBackgroundTextColor} />
                         </Button>
@@ -163,16 +163,17 @@ class PatientCheckInForm extends React.Component {
                 <Body style={{ width: '100%' }}>
                     <Content style={{ width: '90%', marginTop: 40 }}>
                         <View style={{ display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
-                            <TouchableHighlight onPress={() => this.selectCustomerType(1)}>
-                                <Button style={this.props.styles.button}>
-                                    <Text >Medical</Text>
+                            <View>
+                                <Button style={this.state.selectCustomerType==1?this.props.styles.buttonTabActive:this.props.styles.buttonTabInActive} onPress={() => this.selectCustomerType(1)}>
+                                    <Text style={this.state.selectCustomerType==1?{color:this.props.colors.primaryButtonTextColor}:{color:this.props.colors.secondaryButtonTextColor}} >Medical</Text>
                                 </Button>
-                            </TouchableHighlight>
-                            <TouchableHighlight onPress={() => this.selectCustomerType(2)}>
-                                <View>
-                                    <Text>RECREATIONAL</Text>
-                                </View>
-                            </TouchableHighlight>
+                            </View>
+                            <View style={{marginLeft:20}}>
+                                <Button style={this.state.selectCustomerType==2?this.props.styles.buttonTabActive:this.props.styles.buttonTabInActive} onPress={() => this.selectCustomerType(2)}>
+                                    <Text style={this.state.selectCustomerType==2?{color:this.props.colors.primaryButtonTextColor}:{color:this.props.colors.secondaryButtonTextColor}} >RECREATIONAL</Text>
+                                </Button>
+                            </View>
+
                         </View>
                         <View >
                             <Form
@@ -186,7 +187,7 @@ class PatientCheckInForm extends React.Component {
                     </Content>
                     <View style={{ justifyContent: 'center', width: '90%', flexDirection: 'row' }}>
                         <Button onPress={() => this.onPress()} style={this.props.styles.button} >
-                            <Text >Add Customer</Text>
+                            <Text style={{color:this.props.colors.primaryButtonTextColor}}>Add Customer</Text>
                         </Button>
                     </View>
                 </Body>
@@ -248,7 +249,24 @@ function newColors(colors) {
             marginTop: 30,
             marginBottom: 20
         },
-
+        buttonTabActive: {
+            backgroundColor: colors.primaryButtonColor,
+            width: '100%',
+            height: 40,
+            borderRadius: 20,
+            marginTop: 30,
+            marginBottom: 20
+        },
+        buttonTabInActive: {
+            backgroundColor: colors.secondaryButtonColor,
+            borderColor:colors.secondaryButtonBorderColor,
+            borderWidth:1,
+            width: '100%',
+            height: 40,
+            borderRadius: 20,
+            marginTop: 30,
+            marginBottom: 20
+        },
         stylesheet: {
             ...stylesheet,
             textbox: {
