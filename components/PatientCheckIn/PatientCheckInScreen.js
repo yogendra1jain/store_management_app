@@ -42,7 +42,7 @@ class PatientCheckInScreen extends React.Component {
     constructor() {
         super();
         this.state = {
-            expanded: false
+            expanded: ''
         }
 
         if (Platform.OS === 'android') {
@@ -50,9 +50,15 @@ class PatientCheckInScreen extends React.Component {
         }
     }
 
-    changeLayout = () => {
+    changeLayout = (id) => {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        this.setState({ expanded: !this.state.expanded });
+        if (this.state.expanded == id) {
+            this.setState({ expanded: '' });
+        }
+        else {
+            this.setState({ expanded: id });
+        }
+
     }
 
     componentDidMount() {
@@ -79,18 +85,20 @@ class PatientCheckInScreen extends React.Component {
         let view = []
         customerData.map((data, index) => {
             view.push(
-                <TouchableOpacity activeOpacity={0.8} onPress={this.changeLayout}>
+                <TouchableOpacity activeOpacity={0.8} onPress={() => this.changeLayout(data.customer.id)} key={data.customer.id}>
                     <Content padder>
                         <Card style={this.props.styles.cardStyle}>
-                            <View style={{
-                                position: 'absolute',
-                                width: 15,
-                                height: 15,
-                                backgroundColor: this.props.colors.primaryAccentColor,
-                                borderTopLeftRadius: 10,
-                                borderBottomRightRadius: 10,
-                            }}>
-                            </View>
+                            {
+                                _get(data, 'status', 0) == 2 ?
+                                    <View style={{
+                                        position: 'absolute',
+                                        width: 15,
+                                        height: 15,
+                                        backgroundColor: this.props.colors.primaryAccentColor,
+                                        borderTopLeftRadius: 10,
+                                        borderBottomRightRadius: 10,
+                                    }}></View> : null
+                            }
                             <CardItem style={this.props.styles.cardContentStyle}>
                                 <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
@@ -120,7 +128,7 @@ class PatientCheckInScreen extends React.Component {
                                         </View>
                                     </View>
 
-                                    <View style={{ width: '100%', height: this.state.expanded ? null : 0, overflow: 'hidden', alignItems: 'center', flexDirection: 'column', }}>
+                                    <View style={{ width: '100%', height: (this.state.expanded == data.customer.id) ? null : 0, overflow: 'hidden', alignItems: 'center', flexDirection: 'column', }}>
                                         <View style={[this.props.styles.queueCardExpandedInfoContainer]}>
                                             <View style={this.props.styles.ExpandedInfo}>
                                                 <Text style={[this.props.styles.cardTextColor]}>Med ID</Text>
@@ -177,42 +185,10 @@ class PatientCheckInScreen extends React.Component {
                         </Button>
                     </Right>
                 </Header>
-
                 <ScrollView>
-
                     {this.populateCustomerQueue()}
-
-
-
-
-                    <Content padder>
-                        <Card style={this.props.styles.cardStyle}>
-                            <CardItem style={this.props.styles.cardContentStyle}>
-                                <Body style={{ flexDirection: 'column', alignItems: 'center' }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-
-                                        <Text style={[this.props.styles.cardTextColor, this.props.styles.queueCardTitle]}>Paul Pogba</Text>
-                                    </View>
-                                    <View style={this.props.styles.queueCardBasicInfoContainer}>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Age</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>30</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>Time</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>11:05 AM</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={[this.props.styles.cardTextColor]}>State</Text>
-                                            <Text style={[this.props.styles.cardTextColor]}>CA</Text>
-                                        </View>
-                                    </View>
-                                </Body>
-                            </CardItem>
-                        </Card>
-                    </Content>
-
                 </ScrollView>
+
             </Container>
         );
     }
