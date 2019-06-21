@@ -3,7 +3,9 @@ import {
     StyleSheet,
     ScrollView,
     View,
-    TouchableHighlight
+    TouchableHighlight,
+    Alert,
+    Linking
 } from 'react-native';
 import t from 'tcomb-form-native';
 // import { Text } from 'react-native-elements';
@@ -25,6 +27,7 @@ import {
 import moment from 'moment';
 /* Lodash Imports */
 import _set from 'lodash/set';
+import _isEmpty from 'lodash/isEmpty';
 import _get from 'lodash/get';
 import _find from 'lodash/find';
 import _cloneDeep from 'lodash/cloneDeep';
@@ -36,6 +39,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 import { showToast } from '../../utils';
 import { postData } from '../../actions/commonAction';
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import { chooseImage } from '../../utils/index';
+
 
 /* Component Imports */
 
@@ -52,8 +58,8 @@ class PatientCheckInForm extends React.Component {
         this.state = {
             value: {},
             isCondition: false,
-addNewCustomer: this.getType(2),
-selectedCustomerType: 2
+            addNewCustomer: this.getType(2),
+            selectedCustomerType: 2
         };
 
         this.validate = null;
@@ -161,6 +167,66 @@ selectedCustomerType: 2
     selectedCustomerType = (customerType) => {
         this.setState({ addNewCustomer: this.getType(customerType), selectedCustomerType: customerType })
     }
+    chooseSelectFileMethod = (title) => {
+        Alert.alert(
+            'Select File',
+            `Please Select which file you want to select.`,
+            [
+                { text: 'Select PDF', onPress: () => this.chooseFile(title) },
+                { text: 'Select Image', onPress: () => this.uploadImage('photo') },
+                { text: 'Cancel', onPress: () => { } },
+            ],
+            { cancelable: true }
+        );
+    }
+    uploadImage = (mediaType) => {
+        chooseImage(mediaType)
+            .then((data) => {
+                const { uri, name, mimeType } = data || {};
+                const formData = new FormData();
+                    formData.append('file', { uri, type: mimeType, name });
+                if (uri && !_isEmpty(uri)) {
+                    this.uploadData(formData, uri);
+                }
+
+            }, (err) => {
+            });
+    }
+    chooseFile = (title) => {
+        if (DocumentPicker && DocumentPicker.show) {
+            DocumentPicker.show({
+                filetype: [DocumentPickerUtil.pdf()],
+            }, (error, res) => {
+                // Android
+                if (!error) {
+                    res.title = title;
+                    res.owner = 'doctor';
+                    this.setFile(res);
+                }
+            });
+        }
+    }
+    setFile = (res) => {
+        const { uri, type: mimeType, fileName } = res || {};
+        const formData = new FormData();
+        formData.append('file', { uri, type: mimeType, name: fileName });
+        if (uri && !_isEmpty(uri)) {
+            // console.log('data to be upload', formData);
+            this.uploadData(formData, uri);
+        }
+    }
+    uploadData = (formData, uri) => {
+        const url = `/Upload/File`;
+        const identifier = 'UPLOAD_DOCUMENTS';
+        const key = 'uploadedDocuments';
+        this.props.dispatch(postData(url, formData, identifier, key))
+            .then((data) => {
+                this.setState({ uploadedDocUrl: data.url })
+                console.log(data, "upload data is here");
+            }, (err) => {
+                console.log('error while uploading documents', err);
+            });
+    }
     render() {
         const { error, strings } = this.props || {};
         this.options = {
@@ -226,6 +292,24 @@ selectedCustomerType: 2
                                 onChange={this.onChange}
                             />
                         </View>
+                        <TouchableHighlight onPress={() => this.chooseSelectFileMethod('service img')}>
+                            <View style={[theme.centerAlign, { flex: 1, flexDirection: 'column', margin: 20 }]}>
+                                <View style={{ flex: 1, marginBottom: 15 }}>
+                                    <Text style={{ fontSize: 20, color: 'black' }}>Camera Text</Text>
+                                </View>
+                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text>Camera Icon Will Come Here</Text>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                        <TouchableHighlight onPress={() => Linking.openURL(this.state.uploadedDocUrl)}>
+                            <View>
+                                <Text>
+                                    Uploaded Doc Link {this.state.uploadedDocUrl}
+                                </Text>
+                            </View>
+                        </TouchableHighlight>
+
                     </Content>
                     <View style={{ justifyContent: 'center', width: '90%', flexDirection: 'row' }}>
                         <Button onPress={() => this.onPress()} style={this.props.styles.button} >
@@ -233,7 +317,7 @@ selectedCustomerType: 2
                         </Button>
                     </View>
                 </Body>
-            </Container>
+            </Container >
         );
     }
 }
@@ -327,7 +411,7 @@ function newColors(colors) {
             dateValue: {
                 normal: {
                     ...stylesheet.dateValue.normal,
-                    color: colors.normalTextfieldColor,  
+                    color: colors.normalTextfieldColor,
                 }
             },
             controlLabel: {

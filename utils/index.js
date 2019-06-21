@@ -8,6 +8,11 @@ import _cloneDeep from 'lodash/cloneDeep';
 // import uuidv1 from 'uuid/v1';
 import { Alert } from 'react-native';
 import { Toast } from 'native-base';
+import ImagePicker from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
+
+import { Platform } from 'react-native';
+
 // import firebase from 'react-native-firebase';
 
 const generateV1uuid = () => '21112';
@@ -364,3 +369,57 @@ export const postAPI = (username, path, paramObj, addOnOptions, addOnHeaders) =>
         };
         timerFn();
 */
+
+
+
+export function chooseImage(title) {
+    const options = {
+        title: `Select ${title}`,
+        mediaType: title,
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+    }
+    return new Promise((resolve, reject) => {
+        ImagePicker.showImagePicker(options, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                response.title = title;
+                response.owner = 'operator';
+                if (Platform.OS == 'ios' && title == 'photo') {
+                    //    fileName = 'Image'+ new Date().toString() + '.jpg';
+                    let strs = response.uri.split('/');
+                    response.fileName = strs[strs.length - 1];
+                    response.type = 'image/jpeg';
+                }
+                if (title == 'video') {
+                    return resolve(response);
+                } else {
+                    setFile(response, resolve, reject);
+                }
+            }
+        });
+    });
+}
+export function setFile(res, resolve, reject) {
+    const { uri, type: mimeType, fileName } = res || {};
+    ImageResizer.createResizedImage(uri, 1024, 1024, 'JPEG', 99).then((response) => {
+        // const { uri, name } = response || {};
+        response.mimeType = mimeType;
+        // this.setState({
+        //     imageSource: uri,
+        //     fileName: name,
+        //     uploadingFile: true,
+        // });
+        return resolve(response);
+    }).catch((err) => {
+        console.log('error while resizing image', err);
+        return reject(err);
+    });
+}
